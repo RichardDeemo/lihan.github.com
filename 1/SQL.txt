@@ -1,0 +1,54 @@
+CREATE TABLE Student(
+  Sno CHAR(9) PRIMARY KEY,
+  Sname CHAR(20),
+  Ssex CHAR(2),
+  Sage SMALLINT,
+  Sdept CHAR(20)
+  );
+
+CREATE TABLE Teacher(
+  Tno CHAR(8) PRIMERY KEY,
+  Tname CHAR(20),
+  Tsex CHAR(2),
+  Tage SMALLINT,
+  Tdept CHAR(20)
+  );
+
+CREATE TABLE Course(
+  Cno CHAR(4) PRIMARY KEY,
+  Cname CHAR(40) NOT NULL,
+  Cpno CHAR(4),
+  Ccredit SMALLINT,
+  UNIQUE (Cname),
+  FOREIGN KEY (Cpno) REFERENCES Course(Cno)
+  );
+
+CREATE TABLE SCT(
+  Sno CHAR(9),
+  Tno CHAR(8),
+  Cno CHAR(4),
+  Grade SMALLINT,
+  PRIMERY KEY (Sno,Tno,Cno),
+  FOREIGN KEY (Sno) REFERENCEs Student(Sno),
+  FOREIGN KEY (Tno) REFERENCEs Teacher(Tno),
+  FOREIGN KEY (Cno) REFERENCEs Course(Cno)
+  );  
+  //1.2
+
+CREATE UNIQUE INDEX Stusno ON Student(Sno);
+CREATE UNIQUE INDEX Teatno ON Teacher(Tno);
+CREATE UNIQUE INDEX Coucno ON Course(Cno);
+CREATE UNIQUE INDEX SCTno ON SCT(Sno ASC,Tno ASC,Cno DESC); 
+DROP INDEX SCTno; 
+  //1.4
+
+ALTER TABLE Teacher ADD Srank CHAR(20);
+  //1.3
+
+INSERT INTO Student VALUES ('031902112','李涵','男',20,'IT');
+INSERT INTO Teacher VALUES ('19890101','叶文洁','女',59,'AP','教授');
+INSERT INTO Course VALUES ('0102','天文漫谈',NULL,2);
+INSERT INTO SCT VALUES ('031902112','19890101','0102',NULL);
+UPDATE SCT SET Grade=90 WHERE Sno='031902112';
+DELETE FROM SCT WHERE Sno='031902112';
+  //1.5
